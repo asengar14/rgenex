@@ -1,0 +1,9 @@
+import { renderHook } from '@testing-library/react';
+import { use{{pascalCase name}} } from './{{name}}';
+
+describe('use{{pascalCase name}}', () => {
+  it('should work', () => {
+    const { result } = renderHook(() => use{{pascalCase name}}());
+    expect(result.current).toBeDefined();
+  });
+});

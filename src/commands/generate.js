@@ -1,0 +1,87 @@
+const fs = require('fs');
+const path = require('path');
+const { loadConfig } = require('../config');
+const getComponentGenerator = require('../generators/component');
+const Handlebars = require('../utils/helpers');
+
+async function generateCommand(type, name) {
+  const config = await loadConfig();
+  if (!config) {
+    console.error('No rgenex.config.js found. Run "rgenex init" first.');
+    return;
+  }
+
+  if (type === 'component') {
+    await generateComponent(name, config);
+  } else {
+    console.error(`Unknown type: ${type}`);
+  }
+}
+
+async function generateComponent(name, config) {
+  const basePath = path.join(process.cwd(), config.paths.components);
+  const structure = config.generators.component.structure;
+  const templateDir = path.join(__dirname, '../templates/component', structure);
+
+  const data = {
+    name,
+    language: config.language,
+    pascalCase: (str) => str.replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toUpperCase() : word.toUpperCase()).replace(/\s+/g, ''),
+    useStyles: config.generators.component.includeStyle && config.styling !== 'none',
+  };
+
+  const files = [];
+
+  if (structure === 'grouped') {
+    files.push({
+      template: path.join(templateDir, '__name__.tsx.hbs'),
+      output: path.join(basePath, data.pascalCase(name), `${name}.tsx`),
+    });
+    files.push({
+      template: path.join(templateDir, 'index.ts.hbs'),
+      output: path.join(basePath, data.pascalCase(name), 'index.ts'),
+    });
+    if (config.generators.component.includeTest) {
+      files.push({
+        template: path.join(templateDir, '__name__.test.tsx.hbs'),
+        output: path.join(basePath, data.pascalCase(name), `${name}.test.tsx`),
+      });
+    }
+    if (data.useStyles) {
+      files.push({
+        template: path.join(templateDir, '__name__.module.scss.hbs'),
+        output: path.join(basePath, data.pascalCase(name), `${name}.module.scss`),
+      });
+    }
+  } else {
+    files.push({
+      template: path.join(templateDir, '__name__.tsx.hbs'),
+      output: path.join(basePath, `${data.pascalCase(name)}.tsx`),
+    });
+    if (config.generators.component.includeTest) {
+      files.push({
+        template: path.join(templateDir, '__name__.test.tsx.hbs'),
+        output: path.join(basePath, `${data.pascalCase(name)}.test.tsx`),
+      });
+    }
+    if (data.useStyles) {
+      files.push({
+        template: path.join(templateDir, '__name__.module.scss.hbs'),
+        output: path.join(basePath, `${data.pascalCase(name)}.module.scss`),
+      });
+    }
+  }
+
+  for (const file of files) {
+    const templateContent = fs.readFileSync(file.template, 'utf-8');
+    const compiled = Handlebars.compile(templateContent)(data);
+    const outputDir = path.dirname(file.output);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true });
+    }
+    fs.writeFileSync(file.output, compiled);
+    console.log(`Created ${file.output}`);
+  }
+}
+
+module.exports = { generateCommand };
