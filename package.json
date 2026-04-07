@@ -1,6 +1,6 @@
 {
   "name": "rgenex",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "Angular CLI-style code generator for React. Scaffold components, hooks and pages instantly.",
   "main": "index.js",
   "bin": {
