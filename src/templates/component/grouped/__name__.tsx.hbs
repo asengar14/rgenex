@@ -1,0 +1,18 @@
+import React from 'react';
+{{#if useStyles}}
+import styles from './{{name}}.module.scss';
+{{/if}}
+
+{{#ifEquals language "typescript"}}
+interface {{pascalCase name}}Props {}
+{{/ifEquals}}
+
+const {{pascalCase name}}: React.FC{{#ifEquals language "typescript"}}<{{pascalCase name}}Props>{{/ifEquals}} = () => {
+  return (
+    <div{{#if useStyles}} className={styles.container}{{/if}}>
+      <h1>Aditya{{pascalCase name}}</h1>
+    </div>
+  );
+};
+
+export default {{pascalCase name}};

@@ -1,0 +1,16 @@
+import React from 'react';
+{{#if useStyles}}
+import styles from './{{name}}.module.scss';
+{{/if}}
+
+interface {{pascalCase name}}Props {}
+
+const {{pascalCase name}}: React.FC<{{pascalCase name}}Props> = () => {
+  return (
+    <div{{#if useStyles}} className={styles.container}{{/if}}>
+      <h1>{{pascalCase name}}</h1>
+    </div>
+  );
+};
+
+export default {{pascalCase name}};
