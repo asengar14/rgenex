@@ -18,6 +18,7 @@ program
 
 program
   .command('generate <type> <name>')
+  .alias('g')
   .description('Generate a new component, hook, page, etc.')
   .action(generateCommand);
 

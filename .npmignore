@@ -1,0 +1,35 @@
+# Git
+.gitignore
+.gitattributes
+.git/
+
+# Editor and IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.nyc_output/
+coverage/
+jest.config.js
+
+# Development
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# CI/CD
+.github/
+
+# Configuration
+.prettierrc
+.prettierignore
+
+# Documentation (optional - comment out to include)
+# QUICK_START.md
+
+# Root files
+.npmrc
