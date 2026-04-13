@@ -1,6 +1,6 @@
 {
   "name": "rgenex",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Configuration-driven code generator for React. Enforce consistent file structures and team standards with customizable rgenex.config.js",
   "main": "index.js",
   "bin": {
