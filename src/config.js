@@ -29,6 +29,12 @@ function getDefaultConfig() {
         includeStyle: true,
         updateBarrel: true,
       },
+      page: {
+        includeTest: true,
+      },
+      hook: {
+        includeTest: true,
+      },
     },
   };
 }
