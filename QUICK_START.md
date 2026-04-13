@@ -1,15 +1,17 @@
-# rgenex - Angular CLI-Style Code Generator for React
+# rgenex - Configuration-Driven Code Generator for React
 
 ## 📋 What is rgenex?
 
-**rgenex** is a powerful CLI tool that brings Angular-style scaffolding to React projects. It automatically generates boilerplate code for React components, hooks, and pages based on customizable templates and your project configuration.
+**rgenex** is a powerful CLI tool that brings Angular-style scaffolding to React projects with **configuration-driven code generation**. Define your team's code structure, naming conventions, and file patterns once in `rgenex.config.js`, and every team member will generate code consistently—automatically.
 
-Instead of manually creating multiple files every time you need a new component, simply run a command and rgenex handles everything—creating the component file, test file, styles, barrel exports, and more—in seconds.
+It automatically generates boilerplate code for React components, hooks, and pages based on your project configuration. Instead of manually creating multiple files every time you need a new component (and debating folder structures with your team), simply run a command and rgenex handles everything—creating the component file, test file, styles, barrel exports, and more—in seconds, **following your exact standards**.
 
 ### Key Features
 
+- 🎯 **Configuration-Driven** - Define code structure once, enforce everywhere with `rgenex.config.js`
+- 👥 **Team Standardization** - Eliminate architecture debates—everyone generates code the same way
 - ⚡ **Instant Scaffolding** - Generate complete components, hooks, and pages with a single command
-- 🎨 **Configurable Templates** - Customize folder structures and file templates to match your conventions
+- 🎨 **Fully Customizable** - Customize folder structures, naming conventions, and file templates
 - 🧪 **Built-in Testing** - Automatically generate test files (Vitest, Jest support)
 - 🎯 **Smart Detection** - Auto-detects your project stack (TypeScript, styling frameworks, testing libraries)
 - 📦 **Framework-Agnostic** - Works with any React setup (CRA, Vite, Next.js, etc.)
@@ -274,37 +276,45 @@ module.exports = {
 
 ### 🎯 **Key Benefits**
 
-1. **Consistency**
-   - Enforces consistent file structures across your project
-   - All team members generate code the same way
-   - Reduces "structure debates" in code reviews
+1. **🎯 Configuration-Driven Team Standards** ⭐ THE BIGGEST VALUE
+   - Define your code structure, naming conventions, and file patterns **once** in `rgenex.config.js`
+   - **Every team member generates code exactly the same way** — no variations
+   - Eliminates "let's follow this structure" debates in code reviews
+   - New team members onboard faster — they just use the config
+   - Scales from 1 person to 100+ person teams with consistent architecture
 
-2. **Speed & Productivity**
+2. **Consistency**
+   - Enforces consistent file structures across your entire project
+   - All team members generate code following the same standard
+   - Reduces architectural inconsistencies and review friction
+
+3. **Speed & Productivity**
    - Generate a component with tests and styles in seconds
-   - No more copy-pasting boilerplate code
-   - Estimate: **5-10 minutes saved per component**
+   - No more copy-pasting boilerplate or worrying about structure
+   - Estimate: **5-10 minutes saved per component** (or 40+ min/day for active developers)
 
-3. **Best Practices Built-In**
+4. **Best Practices Built-In**
    - Auto-generated test files encourage test-driven development
    - Follows React conventions and React.FC patterns
    - Scoped styles prevent CSS conflicts
+   - Enforces your team's coding standards automatically
 
-4. **Zero Production Overhead**
+5. **Zero Production Overhead**
    - Dev-only tool—completely removed after build
    - **No impact on your app's bundle size**
    - ~4.2 KB when published to npm
 
-5. **Smart Configuration**
+6. **Smart Configuration**
    - Auto-detects your tech stack (TypeScript, Jest, Tailwind, etc.)
    - Run `npx rgenex init` once, then forget about it
    - Override defaults in config if needed
 
-6. **Scalability**
+7. **Scalability**
    - Handles both small projects and enterprise applications
    - Easily customize templates to match your design system
    - Perfect for component libraries
 
-7. **Angular Developers Love It**
+8. **Angular Developers Love It**
    - Familiar DX for teams migrating from Angular
    - Brings `ng generate` power to React
    - Lower learning curve for Angular background developers
