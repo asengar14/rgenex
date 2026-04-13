@@ -5,11 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.2] - 2026-04-13
+## [1.0.4] - 2026-04-13
 
 ### Added
 
-- First stable release of rgenex (v1.0.1 was pre-release preparation)
+- First stable release with configuration-driven documentation
+- Enhanced positioning highlighting rgenex.config.js as core feature
+- Complete documentation (README, QUICK_START, CONTRIBUTING, CHANGELOG)
 - **Component generation** with configurable structure (grouped/flat)
   - Auto-generates component file (.tsx)
   - Auto-generates test file (.test.tsx)
