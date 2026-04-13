@@ -10,11 +10,21 @@
 
 ```bash
 npm install --save-dev rgenex
+```
+
+![Install](https://raw.githubusercontent.com/asengar14/rgenex/aabd830e50a104529db511b61d211b4c125f5e55/demo/install.gif)
+
+```bash
 npx rgenex init          # Creates rgenex.config.js based on your stack
+```
+![Init](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_init.gif?raw=true)
+
+```bash
 npx rgenex generate component Button
 # or use the shorthand alias
 npx rgenex g component Button
 ```
+![Generate](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_component_generate.gif?raw=true)
 
 ## ✨ Core Features
 
