@@ -4,7 +4,7 @@ import styles from './{{name}}.module.scss';
 {{/if}}
 
 {{#ifEquals language "typescript"}}
-interface {{pascalCase name}}Props {}
+export interface {{pascalCase name}}Props {}
 {{/ifEquals}}
 
 const {{pascalCase name}}: React.FC{{#ifEquals language "typescript"}}<{{pascalCase name}}Props>{{/ifEquals}} = () => {

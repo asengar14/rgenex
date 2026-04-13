@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 const { loadConfig } = require('../config');
-const getComponentGenerator = require('../generators/component');
 const Handlebars = require('../utils/helpers');
+const chalk = require('chalk');
 
 async function generateCommand(type, name) {
   const config = await loadConfig();
   if (!config) {
-    console.error('No rgenex.config.js found. Run "rgenex init" first.');
+    console.error(chalk.red('No rgenex.config.js found. Run "rgenex init" first.'));
     return;
   }
 
@@ -84,8 +84,11 @@ async function generateComponent(name, config) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
     fs.writeFileSync(file.output, compiled);
-    console.log(`Created ${file.output}`);
+    
+    const relativePath = path.relative(process.cwd(), file.output);
+    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
   }
+  printFooter();
 }
 
 async function generatePage(name, config) {
@@ -120,8 +123,10 @@ async function generatePage(name, config) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
     fs.writeFileSync(file.output, compiled);
-    console.log(`Created ${file.output}`);
+    const relativePath = path.relative(process.cwd(), file.output);
+    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
   }
+  printFooter();
 }
 
 async function generateHook(name, config) {
@@ -156,8 +161,16 @@ async function generateHook(name, config) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
     fs.writeFileSync(file.output, compiled);
-    console.log(`Created ${file.output}`);
+    const relativePath = path.relative(process.cwd(), file.output);
+    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
   }
+  printFooter();
+}
+
+async function printFooter() {
+  console.log(chalk.gray('\n────────────────────────'));
+
+console.log(`${chalk.yellow('✨')} ${chalk.dim('Generated with')} ${chalk.cyan('rgenex')}\n`);
 }
 
 module.exports = { generateCommand };
