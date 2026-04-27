@@ -55,6 +55,7 @@
     "cosmiconfig": "^9.0.0",
     "enquirer": "^2.4.1",
     "handlebars": "^4.7.8",
+    "inquirer": "^13.4.2",
     "ora": "^8.0.1",
     "plop": "^4.0.1"
   },
