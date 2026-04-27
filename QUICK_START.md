@@ -4,18 +4,7 @@
 
 **rgenex** is a powerful CLI tool that brings Angular-style scaffolding to React projects with **configuration-driven code generation**. Define your team's code structure, naming conventions, and file patterns once in `rgenex.config.js`, and every team member will generate code consistently—automatically.
 
-It automatically generates boilerplate code for React components, hooks, and pages based on your project configuration. Instead of manually creating multiple files every time you need a new component (and debating folder structures with your team), simply run a command and rgenex handles everything—creating the component file, test file, styles, barrel exports, and more—in seconds, **following your exact standards**.
-
-### Key Features
-
-- 🎯 **Configuration-Driven** - Define code structure once, enforce everywhere with `rgenex.config.js`
-- 👥 **Team Standardization** - Eliminate architecture debates—everyone generates code the same way
-- ⚡ **Instant Scaffolding** - Generate complete components, hooks, and pages with a single command
-- 🎨 **Fully Customizable** - Customize folder structures, naming conventions, and file templates
-- 🧪 **Built-in Testing** - Automatically generate test files (Vitest, Jest support)
-- 🎯 **Smart Detection** - Auto-detects your project stack (TypeScript, styling frameworks, testing libraries)
-- 📦 **Framework-Agnostic** - Works with any React setup (CRA, Vite, Next.js, etc.)
-- 🚀 **Zero Production Impact** - Dev-only tool, doesn't affect your bundle size
+It automatically generates boilerplate code for React components, hooks, and pages based on your project configuration. Instead of manually creating multiple files every time you need a new component, simply run a command and rgenex handles everything—creating the component file, test file, styles, barrel exports, and more—in seconds.
 
 ---
 
@@ -23,31 +12,17 @@ It automatically generates boilerplate code for React components, hooks, and pag
 
 ### Installation
 
-Install rgenex as a development dependency:
-
 ```bash
 npm install --save-dev rgenex
-# or
-yarn add --dev rgenex
-# or globally
-npm install -g rgenex
 ```
 
 ### Initial Setup
-
-Run the initialization command to create a configuration file for your project:
 
 ```bash
 npx rgenex init
 ```
 
-This generates a `rgenex.config.js` file that auto-detects:
-
-- **Language**: TypeScript or JavaScript
-- **Styling**: SCSS Modules, Tailwind CSS, or plain CSS
-- **Testing Framework**: Vitest, Jest, or none
-
-You can then customize the configuration based on your needs.
+Creates a `rgenex.config.js` file by detecting your project stack automatically.
 
 ---
 
@@ -228,6 +203,43 @@ describe("useLocalStorage", () => {
 });
 ```
 
+
+## 🆕 New in v1.1.0
+
+### Preview Before Generating
+
+```bash
+npx rgenex g component Button --dry
+```
+
+Preview generated files without writing to disk.
+
+---
+
+### Safe Overwrite Protection
+
+When generating into existing files, rgenex prompts before overwriting.
+
+---
+
+### Force Overwrite
+
+```bash
+npx rgenex g component Button --force
+```
+
+Skip overwrite prompts.
+
+---
+
+### List Available Generators
+
+```bash
+npx rgenex list
+```
+
+Display all configured generators.
+
 ---
 
 ## 📂 Configuration (`rgenex.config.js`)
@@ -272,162 +284,6 @@ module.exports = {
 
 ---
 
-## ✨ Why Use rgenex?
-
-### 🎯 **Key Benefits**
-
-1. **🎯 Configuration-Driven Team Standards** ⭐ THE BIGGEST VALUE
-   - Define your code structure, naming conventions, and file patterns **once** in `rgenex.config.js`
-   - **Every team member generates code exactly the same way** — no variations
-   - Eliminates "let's follow this structure" debates in code reviews
-   - New team members onboard faster — they just use the config
-   - Scales from 1 person to 100+ person teams with consistent architecture
-
-2. **Consistency**
-   - Enforces consistent file structures across your entire project
-   - All team members generate code following the same standard
-   - Reduces architectural inconsistencies and review friction
-
-3. **Speed & Productivity**
-   - Generate a component with tests and styles in seconds
-   - No more copy-pasting boilerplate or worrying about structure
-   - Estimate: **5-10 minutes saved per component** (or 40+ min/day for active developers)
-
-4. **Best Practices Built-In**
-   - Auto-generated test files encourage test-driven development
-   - Follows React conventions and React.FC patterns
-   - Scoped styles prevent CSS conflicts
-   - Enforces your team's coding standards automatically
-
-5. **Zero Production Overhead**
-   - Dev-only tool—completely removed after build
-   - **No impact on your app's bundle size**
-   - ~4.2 KB when published to npm
-
-6. **Smart Configuration**
-   - Auto-detects your tech stack (TypeScript, Jest, Tailwind, etc.)
-   - Run `npx rgenex init` once, then forget about it
-   - Override defaults in config if needed
-
-7. **Scalability**
-   - Handles both small projects and enterprise applications
-   - Easily customize templates to match your design system
-   - Perfect for component libraries
-
-8. **Angular Developers Love It**
-   - Familiar DX for teams migrating from Angular
-   - Brings `ng generate` power to React
-   - Lower learning curve for Angular background developers
-
----
-
-## 📊 Real-World Example
-
-### Without rgenex (Manual)
-
-```bash
-# Create component folder
-mkdir src/components/UserCard
-
-# Create component file (copy from another component)
-# Create test file (copy from another test)
-# Create styles file (copy from another component)
-# Create index file (copy from another)
-# Update barrel exports in parent index.ts
-
-# ⏱️ ~5-10 minutes of repetitive work
-```
-
-### With rgenex (Automated)
-
-```bash
-npx rgenex generate component UserCard
-
-# ✨ All files created instantly!
-# ⏱️ ~3 seconds
-```
-
----
-
-## 🔄 Workflow Example
-
-### Complete Workflow
-
-```bash
-# 1. Initialize project (one-time setup)
-npx rgenex init
-
-# 2. Create a component
-npx rgenex g component Card
-
-# 3. Create a page
-npx rgenex g page Products
-
-# 4. Create a custom hook
-npx rgenex g hook useProducts
-
-# Result: Fully scaffolded, tested component ready for implementation!
-```
-
----
-
-## 💡 Developer Tips
-
-### Naming Conventions
-
-- **Components**: PascalCase (e.g., `UserCard`, `ProductList`)
-- **Hooks**: camelCase with `use` prefix (e.g., `useAuth`, `useFetch`)
-- **Pages**: PascalCase (e.g., `Dashboard`, `ProductDetails`)
-
-### Best Practices
-
-1. Run `npx rgenex init` when setting up a new project
-2. Commit `rgenex.config.js` to version control
-3. Customize config to match your team's conventions
-4. Use grouped structure for larger components, flat for smaller ones
-5. Always implement the generated test files to catch bugs early
-
-### Customizing Templates
-
-Advanced users can customize templates in `src/templates/` to match your design system or specific requirements.
-
----
-
-## 🚀 Performance & Size Impact
-
-| Metric                | Value                        |
-| --------------------- | ---------------------------- |
-| **Package Size**      | 4.2 KB (compressed)          |
-| **Unpacked Size**     | 16.9 KB                      |
-| **Dev Dependency**    | ✅ Doesn't affect production |
-| **Build Impact**      | Zero—removed after build     |
-| **Time per Generate** | ~1-2 seconds                 |
-
----
-
-## 📚 Common Commands Reference
-
-```bash
-# Initialize configuration
-npx rgenex init
-
-# Generate component
-npx rgenex generate component Button
-npx rgenex g component Button
-
-# Generate page
-npx rgenex generate page Dashboard
-npx rgenex g page Dashboard
-
-# Generate hook
-npx rgenex generate hook useCounter
-npx rgenex g hook useCounter
-
-# View installed version
-npx rgenex --version
-```
-
----
 
 ## ⚙️ Troubleshooting
 

@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-04-27
+
+### Added
+- Added --dry flag to preview generated files without writing
+- Added overwrite protection prompt for existing files
+- Added --force flag to overwrite existing files without prompt
+- Added `rgenex list` command to display available generators
+
+### Improved
+- Enhanced CLI output formatting and readability
+- Added file counts to preview/generation output
+- Added created vs overwritten file indicators
+- Unified footer branding across commands
+- Improved init command output consistency
+
 
 ## [1.0.5] - 2026-04-13
 

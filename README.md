@@ -4,7 +4,10 @@
 [![license](https://img.shields.io/npm/l/rgenex)](LICENSE)
 [![npm downloads](https://img.shields.io/npm/dm/rgenex)](https://www.npmjs.com/package/rgenex)
 
-**Configuration-driven code generator for React.** Define your code structure once in `rgenex.config.js` and enforce it across your entire team.
+**Config-driven React architecture scaffolding for teams.**  
+Define your project structure once in `rgenex.config.js` and generate code consistently across your entire team.
+
+---
 
 ## 🚀 Quick Start
 
@@ -15,65 +18,133 @@ npm install --save-dev rgenex
 ![Install](https://raw.githubusercontent.com/asengar14/rgenex/aabd830e50a104529db511b61d211b4c125f5e55/demo/install.gif)
 
 ```bash
-npx rgenex init          # Creates rgenex.config.js based on your stack
+npx rgenex init
+# Creates rgenex.config.js based on your detected stack
 ```
+
 ![Init](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_init.gif?raw=true)
 
 ```bash
 npx rgenex generate component Button
-# or use the shorthand alias
+# shorthand
 npx rgenex g component Button
 ```
+
 ![Generate](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_component_generate.gif?raw=true)
+
+---
 
 ## ✨ Core Features
 
-- 🎯 **Config-Driven Generation** — Define your code structure, naming conventions, and file patterns once in `rgenex.config.js`
-- 👥 **Team Standardization** — Enforce consistent architecture across your entire team
-- ⚡ **Instant Scaffolding** — Generate complete components, hooks, and pages with one command
-- 🧪 **Built-in Tests** — Auto-generate test files (Vitest, Jest)
-- 🎨 **Smart Stack Detection** — Auto-detects your tech stack (TypeScript, styling, testing)
-- 📦 **Zero Bundle Impact** — Dev-only tool, completely removed after build
-- 🔧 **Fully Customizable** — Adapt templates, paths, naming conventions to your needs
+- 🎯 **Config-Driven Generation** — Define structure, naming conventions, and file patterns once in `rgenex.config.js`
+- 👥 **Team Standardization** — Enforce consistent React architecture across your team
+- ⚡ **Instant Scaffolding** — Generate components, hooks, and pages in one command
+- 🛡️ **Safe Generation** — Preview output before writing and prevent accidental overwrites
+- 🧪 **Built-in Test Support** — Auto-generate test files (Vitest, Jest)
+- 🎨 **Smart Stack Detection** — Detects TypeScript, styling, and testing setup automatically
+- 📦 **Zero Bundle Impact** — Dev-only tool, excluded from production builds
+- 🔧 **Configurable Structure** — Adapt templates, paths, and conventions to your architecture
+
+---
+
+## 🆕 New in v1.1.0
+
+### Preview Before Generating
+
+```bash
+npx rgenex g component Button --dry
+```
+
+Preview files before writing them to disk.
+
+---
+
+### Safe Overwrite Protection
+
+```bash
+npx rgenex g component Button
+```
+
+If files already exist, rgenex prompts before overwriting.
+
+---
+
+### Force Overwrite
+
+```bash
+npx rgenex g component Button --force
+```
+
+Skip overwrite prompts when needed.
+
+---
+
+### List Available Generators
+
+```bash
+npx rgenex list
+```
+
+View all configured generators in your project.
+
+---
 
 ## 📖 Documentation
 
-- **[QUICK_START.md](./QUICK_START.md)** — Complete guide with examples for all generators
+- **[QUICK_START.md](./QUICK_START.md)** — Complete guide with examples
 - **[CHANGELOG.md](./CHANGELOG.md)** — Release history
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)** — Contributing guidelines
+
+---
 
 ## 💡 What It Generates
 
 ### Components
 
 ```bash
-npx rgenex generate component Button
 npx rgenex g component Button
 ```
 
-Creates: `Button.tsx`, `Button.test.tsx`, `Button.module.scss`, and `index.ts` (optional grouped structure)
+Creates:
+
+- `Button.tsx`
+- `Button.test.tsx`
+- `Button.module.scss`
+- `index.ts`
+
+*(Structure depends on your config)*
+
+---
 
 ### Hooks
 
 ```bash
-npx rgenex generate hook useCounter
 npx rgenex g hook useCounter
 ```
 
-Creates: `useCounter.ts` and `useCounter.test.ts`
+Creates:
+
+- `useCounter.ts`
+- `useCounter.test.ts`
+
+---
 
 ### Pages
 
 ```bash
-npx rgenex generate page Dashboard
 npx rgenex g page Dashboard
 ```
 
-Creates: `Dashboard.tsx` and `Dashboard.test.tsx`
+Creates:
 
-## ⚙️ Configuration - The Real Power
+- `Dashboard.tsx`
+- `Dashboard.test.tsx`
 
-Once you create `rgenex.config.js` with `npx rgenex init`, **define once, use everywhere**:
+---
+
+## ⚙️ Configuration — The Real Power
+
+After running `npx rgenex init`, configure your team’s standards once:
 
 ```javascript
 // rgenex.config.js - Your team's code standards
@@ -93,26 +164,44 @@ module.exports = {
       structure: "grouped", // Grouped or flat structure
       includeTest: true, // Always generate tests
       includeStyle: true, // Always generate styles
+      updateBarrel: true, // Auto-update index.ts exports
     },
   },
 };
 ```
 
-**Every team member uses the same config.** No more debates about file structure! ✨
+---
+
+### Define Once. Enforce Everywhere.
+
+Every team member uses the same configuration.
+
+No more debates about:
+
+- Folder structure
+- Naming conventions
+- Test file placement
+- Style file conventions
+
+---
 
 ## 🛠️ Requirements
 
 - Node.js >= 16.0.0
 - npm or yarn
 
+---
+
 ## 📝 License
 
 MIT
 
+---
+
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
-**Brought to you by [Aditya Singh Sengar](https://github.com/asengar14)**
+**Built by [Aditya Singh Sengar](https://github.com/asengar14)**
