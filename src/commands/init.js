@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { loadConfig, getDefaultConfig } = require('../config');
-const { prompt } = require('enquirer');
+const { printFooter } = require('../utils/printFooter');
+const chalk = require('chalk');
 
 async function detectProjectStack() {
   const packageJsonPath = path.join(process.cwd(), 'package.json');
@@ -33,16 +34,16 @@ async function detectProjectStack() {
 }
 
 async function initCommand() {
-  console.log('Initializing rgenex...');
+  console.log(`${chalk.cyan('⚙')} ${chalk.dim('Initializing')} ${chalk.cyan('rgenex')}...`);
 
   const existingConfig = await loadConfig();
   if (existingConfig) {
-    console.log('rgenex.config.js already exists.');
+    console.log(`${chalk.yellow('⚠')} ${chalk.dim('rgenex.config.js already exists.')}`);
     return;
   }
 
   const detected = await detectProjectStack();
-  console.log(`Detected: ${detected.language}, ${detected.styling}, ${detected.testing}`);
+  console.log(`${chalk.cyan('🔍 Detected:')} ${chalk.dim(`${detected.language}, ${detected.styling}, ${detected.testing}`)}`);
 
   // For now, use defaults; later add prompts
   const config = getDefaultConfig();
@@ -64,7 +65,7 @@ async function initCommand() {
   const configContent = `module.exports = ${JSON.stringify(config, null, 2)};`;
 
   fs.writeFileSync(configPath, configContent);
-  console.log(`Created ${configFilename}`);
+  printFooter();
 }
 
 module.exports = { initCommand };

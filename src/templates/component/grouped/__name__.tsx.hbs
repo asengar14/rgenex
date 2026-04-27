@@ -10,7 +10,7 @@ export interface {{pascalCase name}}Props {}
 const {{pascalCase name}}: React.FC{{#ifEquals language "typescript"}}<{{pascalCase name}}Props>{{/ifEquals}} = () => {
   return (
     <div{{#if useStyles}} className={styles.container}{{/if}}>
-      <h1>Aditya{{pascalCase name}}</h1>
+      <h1>{{pascalCase name}}</h1>
     </div>
   );
 };

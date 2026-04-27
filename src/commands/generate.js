@@ -2,9 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { loadConfig } = require('../config');
 const Handlebars = require('../utils/helpers');
+const { printFooter } = require('../utils/printFooter');
 const chalk = require('chalk');
+const inquirerModule = require('inquirer');
+const inquirer = inquirerModule.default || inquirerModule;
 
-async function generateCommand(type, name) {
+async function generateCommand(type, name, options = {}) {
   const config = await loadConfig();
   if (!config) {
     console.error(chalk.red('No rgenex.config.js found. Run "rgenex init" first.'));
@@ -12,17 +15,17 @@ async function generateCommand(type, name) {
   }
 
   if (type === 'component') {
-    await generateComponent(name, config);
+    await generateComponent(name, config, options);
   } else if (type === 'page') {
-    await generatePage(name, config);
+    await generatePage(name, config, options);
   } else if (type === 'hook') {
-    await generateHook(name, config);
+    await generateHook(name, config, options);
   } else {
     console.error(`Unknown type: ${type}`);
   }
 }
 
-async function generateComponent(name, config) {
+async function generateComponent(name, config, options) {
   const basePath = path.join(process.cwd(), config.paths.components);
   const structure = config.generators.component.structure;
   const templateDir = path.join(__dirname, '../templates/component', structure);
@@ -76,22 +79,10 @@ async function generateComponent(name, config) {
     }
   }
 
-  for (const file of files) {
-    const templateContent = fs.readFileSync(file.template, 'utf-8');
-    const compiled = Handlebars.compile(templateContent)(data);
-    const outputDir = path.dirname(file.output);
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-    fs.writeFileSync(file.output, compiled);
-    
-    const relativePath = path.relative(process.cwd(), file.output);
-    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
-  }
-  printFooter();
+  await executeGeneration(files, data, options);    
 }
 
-async function generatePage(name, config) {
+async function generatePage(name, config, options) {
   const basePath = path.join(process.cwd(), config.paths.pages);
   const templateDir = path.join(__dirname, '../templates/page');
 
@@ -115,21 +106,10 @@ async function generatePage(name, config) {
     });
   }
 
-  for (const file of files) {
-    const templateContent = fs.readFileSync(file.template, 'utf-8');
-    const compiled = Handlebars.compile(templateContent)(data);
-    const outputDir = path.dirname(file.output);
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true });
-    }
-    fs.writeFileSync(file.output, compiled);
-    const relativePath = path.relative(process.cwd(), file.output);
-    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
-  }
-  printFooter();
+  await executeGeneration(files, data, options);
 }
 
-async function generateHook(name, config) {
+async function generateHook(name, config, options) {
   const basePath = path.join(process.cwd(), config.paths.hooks);
   const templateDir = path.join(__dirname, '../templates/hook');
 
@@ -153,24 +133,82 @@ async function generateHook(name, config) {
     });
   }
 
+  await executeGeneration(files, data, options);
+}
+
+async function executeGeneration(files, data, options = {}) {
+  // DRY RUN MODE
+  if (options.dryRun) {
+    console.log(chalk.cyan(`\nPreview (${files.length} file${files.length > 1 ? 's' : ''}):\n`));
+
+    for (const file of files) {
+      const relativePath = path.relative(process.cwd(), file.output);
+      console.log(`${chalk.green('✔')} ${chalk.dim(relativePath)}`);
+    }
+
+    console.log(chalk.dim('\nNo files were written.'));
+
+    console.log(chalk.gray('\n────────────────────────'));
+    console.log(`${chalk.yellow('✨')} ${chalk.dim('Preview generated with')} ${chalk.cyan('rgenex')}\n`);
+
+    return;
+  }
+
+  // CHECK EXISTING FILES
+  const existingFiles = files.filter((file) => fs.existsSync(file.output));
+
+  // PROMPT OVERWRITE IF NEEDED
+  if (existingFiles.length > 0 && !options.force) {
+    const { shouldOverwrite } = await inquirer.prompt([
+      {
+        type: 'confirm',
+        name: 'shouldOverwrite',
+        message: `${existingFiles.length} file(s) already exist. Overwrite all?`,
+        default: false,
+      },
+    ]);
+
+    if (!shouldOverwrite) {
+      console.log(
+        chalk.yellow('\n⚠ Generation cancelled. No files were overwritten.\n')
+      );
+      return;
+    }
+  }
+
+  // WRITE FILES
+  console.log(
+    chalk.cyan(`\nGenerated (${files.length} file${files.length > 1 ? 's' : ''}):\n`)
+  );
+
   for (const file of files) {
+    const alreadyExists = fs.existsSync(file.output);
+
     const templateContent = fs.readFileSync(file.template, 'utf-8');
     const compiled = Handlebars.compile(templateContent)(data);
+
     const outputDir = path.dirname(file.output);
+
     if (!fs.existsSync(outputDir)) {
       fs.mkdirSync(outputDir, { recursive: true });
     }
+
     fs.writeFileSync(file.output, compiled);
+
     const relativePath = path.relative(process.cwd(), file.output);
-    console.log(`${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`);
+
+    if (alreadyExists) {
+      console.log(
+        `${chalk.yellow('↺ Overwritten')} ${chalk.dim(relativePath)}`
+      );
+    } else {
+      console.log(
+        `${chalk.green('✔ Created')} ${chalk.dim(relativePath)}`
+      );
+    }
   }
+
   printFooter();
-}
-
-async function printFooter() {
-  console.log(chalk.gray('\n────────────────────────'));
-
-console.log(`${chalk.yellow('✨')} ${chalk.dim('Generated with')} ${chalk.cyan('rgenex')}\n`);
 }
 
 module.exports = { generateCommand };
