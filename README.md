@@ -15,14 +15,14 @@ Define your project structure once in `rgenex.config.js` and generate code consi
 npm install --save-dev rgenex
 ```
 
-![Install](https://raw.githubusercontent.com/asengar14/rgenex/aabd830e50a104529db511b61d211b4c125f5e55/demo/install.gif)
+![Install](https://raw.githubusercontent.com/asengar14/rgenex/refs/heads/main/demo/install.gif)
 
 ```bash
 npx rgenex init
 # Creates rgenex.config.js based on your detected stack
 ```
 
-![Init](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_init.gif?raw=true)
+![Init](https://raw.githubusercontent.com/asengar14/rgenex/refs/heads/main/demo/rgenex_init.gif)
 
 ```bash
 npx rgenex generate component Button
@@ -30,7 +30,7 @@ npx rgenex generate component Button
 npx rgenex g component Button
 ```
 
-![Generate](https://github.com/asengar14/rgenex/blob/aabd830e50a104529db511b61d211b4c125f5e55/demo/rgenex_component_generate.gif?raw=true)
+![Generate](https://raw.githubusercontent.com/asengar14/rgenex/refs/heads/main/demo/rgenex_component_generate.gif)
 
 ---
 
@@ -47,7 +47,9 @@ npx rgenex g component Button
 
 ---
 
-## 🆕 New in v1.1.0
+## 🆕 Improved Developer Experience in v1.1.0
+
+![rgenex v1.1.0 Features](https://raw.githubusercontent.com/asengar14/rgenex/refs/heads/main/demo/rgenex_component_flags.gif)
 
 ### Preview Before Generating
 
